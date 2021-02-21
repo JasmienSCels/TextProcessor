@@ -1,0 +1,12 @@
+dependencies {
+    testImplementation deps.google.jetpack.foundation.test.junit
+    testImplementation deps.google.jetpack.foundation.test.rules
+    testImplementation deps.google.jetpack.foundation.test.runner
+    testImplementation deps.google.jetpack.foundation.test.extJUnit
+    testImplementation deps.google.jetpack.foundation.test.mockitoCore
+    testImplementation deps.google.jetpack.foundation.test.mockitoInline
+    testImplementation deps.google.jetpack.foundation.test.archCoreTest
+
+    testImplementation deps.thirdParty.json
+    testImplementation deps.google.jetpack.foundation.test.junit
+}

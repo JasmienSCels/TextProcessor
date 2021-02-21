@@ -1,0 +1,66 @@
+apply plugin: 'com.android.application'
+apply plugin: "kotlin-android"
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.benchmark"
+
+android {
+  compileSdkVersion 29
+  buildToolsVersion "30.0.2"
+
+  defaultConfig {
+    applicationId "com.example.bookwordcounter"
+    minSdkVersion 23
+    targetSdkVersion 29
+    versionCode 1
+    versionName "1.0"
+
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+  }
+
+  dataBinding {
+    enabled = true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    }
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+  kotlinOptions {
+    jvmTarget = '1.8'
+  }
+}
+
+dependencies {
+
+  implementation project(':data')
+  implementation project(':domain')
+
+
+  kapt deps.google.dagger.daggerCompiler
+  kapt deps.google.dagger.daggerAndroidProcessor
+
+  implementation deps.thirdParty.reactive.rxJava
+  implementation deps.thirdParty.reactive.rxAndroid
+
+  implementation deps.google.dagger.dagger
+  implementation deps.google.dagger.daggerAndroidRuntime
+  implementation deps.google.dagger.daggerAndroidSupport
+
+  implementation deps.google.jetpack.ui.fragment
+  implementation deps.google.jetpack.ui.fragmentKtx
+
+  implementation deps.google.materialDesign
+  implementation deps.google.jetpack.ui.cardView
+  implementation deps.google.jetpack.ui.constraintLayout
+
+  implementation deps.google.jetpack.ui.recyclerView
+  kapt deps.google.jetpack.architecture.lifecycle.compiler
+  implementation deps.google.jetpack.architecture.lifecycle.extensions
+}

@@ -1,0 +1,51 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.benchmark"
+
+android {
+    defaultConfig {
+        minSdkVersion rootProject.ext.versions.minSdk
+        targetSdkVersion rootProject.ext.versions.targetSdk
+        compileSdkVersion rootProject.ext.versions.compileSdk
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin/'
+        test.java.srcDirs += 'src/test/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+    }
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    testOptions {
+        animationsDisabled = true
+        unitTests.returnDefaultValues = true
+    }
+
+    buildTypes {
+        release
+                {
+                    minifyEnabled true
+                    debuggable false
+                }
+
+        debug
+                {
+                    debuggable true
+                }
+    }
+
+    dependencies {
+        implementation deps.kotlin.stdlib.jdk8
+    }
+}

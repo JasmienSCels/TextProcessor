@@ -1,0 +1,188 @@
+buildscript {
+  ext.kotlin_version = "1.3.72"
+  ext.url = [
+          api: "https://jsonplaceholder.typicode.com/",
+  ]
+
+  ext.versions = [
+          //Android Dependency versions
+          minSdk                    : 23,
+          targetSdk                 : 29,
+          compileSdk                : 29,
+          buildTools                : '29.0.3',
+          room                      : '2.2.2',
+          benchMark                 : '1.0.0',
+          appCompat                 : '1.2.0',
+          lifecycle                 : '2.2.0-rc03',
+          annotations               : '1.1.0',
+          fragment                  : '1.2.4',
+          recyclerView              : '1.1.0',
+          androidCoreKtx            : '1.0.1',
+          materialDesign            : '1.2.0-alpha02',
+          constraintLayout          : "2.0.4",
+          sqlLite                   : '2.1.0',
+          pagingVersion             : "2.1.2",
+          coreLibrary               : "1.0.9",
+          //Third Party Library Dependency versions
+          json                      : '20190722',
+          moshi                     : '1.8.0',
+          rxJava                    : '2.2.15',
+          okhttp                    : '4.9.0',
+          okIO                      : '2.9.0',
+          dagger                    : '2.25.2',
+          retrofit                  : '2.7.0',
+          rxAndroid                 : '2.1.1',
+          retrofit2RxJava2Adapter   : '1.0.0',
+          //Kotlin Dependency versions
+          kotlin                    : [
+                  stdlib    : '1.3.61',
+                  coroutines: '1.0.1'
+          ],
+          //Test Dependency Versions
+          junit                     : '4.12',
+          mockK                     : '1.9.3',
+          mockito                   : '2.23.4',
+          espresso                  : '3.1.1',
+          testCore                  : '1.0.0',
+          archCoreTest              : '2.1.0',
+          testFragment              : '1.1.0-alpha01',
+          testOrchestrator          : '1.1.1',
+          extJunitTestRulesAndRunner: '1.1.0',
+          //Gradle Plugin Versions
+          androidGradlePlugin       : '3.6.0-beta05',
+          benchMarkGradlePlugin     : '1.0.0',
+          dependencyCheckPlugin     : '6.0.5',
+  ]
+  ext.deps = [
+          core      : [
+                  'desugaring': "com.android.tools:desugar_jdk_libs:${versions.coreLibrary}"
+          ],
+          kotlin    : [
+                  stdlib: [
+                          jdk8: "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin.stdlib}"
+                  ]
+          ],
+          google    : [
+                  jetpack       : [
+                          foundation  : [
+                                  benchMark      : "androidx.benchmark:benchmark-junit4:${versions.benchMark}",
+                                  appCompat      : "androidx.appcompat:appcompat:${versions.appCompat}",
+                                  annotations    : "androidx.annotation:annotation:${versions.annotations}",
+                                  pagingLibrary  : "androidx.paging:paging-runtime:${versions.pagingVersion}",
+                                  androidCoreKtx : "androidx.core:core-ktx:${versions.androidCoreKtx}",
+                                  pagingRxSupport: "androidx.paging:paging-rxjava2:${versions.pagingVersion}",
+                                  test           : [
+                                          junit         : "junit:junit:${versions.junit}",
+                                          mockitoCore   : "org.mockito:mockito-core:${versions.mockito}",
+                                          mockitoInline : "org.mockito:mockito-inline:${versions.mockito}",
+                                          archCoreTest  : "androidx.arch.core:core-testing:${versions.archCoreTest}",
+                                          rules         : "androidx.test:rules:${versions.extJunitTestRulesAndRunner}",
+                                          runner        : "androidx.test:runner:${versions.extJunitTestRulesAndRunner}",
+                                          extJUnit      : "androidx.test.ext:junit:${versions.extJunitTestRulesAndRunner}",
+                                          mockitoAndroid: "org.mockito:mockito-android:${versions.mockito}",
+                                          espresso      : [
+                                                  core          : "androidx.test.espresso:espresso-core:${versions.espresso}",
+                                                  intents       : "androidx.test.espresso:espresso-intents:${versions.espresso}",
+                                                  contrib       : "androidx.test.espresso:espresso-contrib:${versions.espresso}",
+                                                  idlingResource: "androidx.test.espresso:espresso-idling-resource:${versions.espresso}"
+                                          ]
+                                  ]
+                          ],
+                          architecture: [
+                                  lifecycle : [
+                                          compiler   : "androidx.lifecycle:lifecycle-compiler:${versions.lifecycle}",
+                                          commonJava8: "androidx.lifecycle:lifecycle-common-java8:${versions.lifecycle}",
+                                          extensions : "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}"
+                                  ],
+                                  navigation: [
+                                          ui      : "androidx.navigation:navigation-ui-ktx:${versions.navigation}",
+                                          fragment: "androidx.navigation:navigation-fragment-ktx:${versions.navigation}"
+                                  ],
+                                  sqlLite   : "androidx.sqlite:sqlite:${versions.sqlLite}",
+                                  room      : [
+                                          ktx     : "androidx.room:room-ktx:${versions.room}",
+                                          rxJava2 : "androidx.room:room-rxjava2:${versions.room}",
+                                          runtime : "androidx.room:room-runtime:${versions.room}",
+                                          testing : "androidx.room:room-testing:${versions.room}",
+                                          compiler: "androidx.room:room-compiler:${versions.room}"
+                                  ],
+                          ],
+                          ui          : [
+                                  fragment         : "androidx.fragment:fragment:${versions.fragment}",
+                                  fragmentKtx      : "androidx.fragment:fragment-ktx:${versions.fragment}",
+                                  vectorDrawable   : [
+                                          vectorDrawable        : "androidx.vectordrawable:vectordrawable:${versions.vectorDrawable}",
+                                          vectorDrawableAnimated: "androidx.vectordrawable:vectordrawable-animated:${versions.vectorDrawable}"
+                                  ],
+                                  cardView         : "androidx.cardview:cardview:${versions.cardView}",
+                                  ossLicenses      : "com.google.android.gms:play-services-oss-licenses:${versions.ossLicenses}",
+                                  recyclerView     : "androidx.recyclerview:recyclerview:${versions.recyclerView}",
+                                  coordinatorLayout: "androidx.coordinatorlayout:coordinatorlayout:${versions.coordinatorLayout}",
+                                  constraintLayout : "androidx.constraintlayout:constraintlayout:${versions.constraintLayout}"
+                          ],
+                  ],
+                  materialDesign: "com.google.android.material:material:${versions.materialDesign}",
+                  dagger        : [
+                          dagger                : "com.google.dagger:dagger:${versions.dagger}",
+                          daggerCompiler        : "com.google.dagger:dagger-compiler:${versions.dagger}",
+                          daggerAndroidRuntime  : "com.google.dagger:dagger-android:${versions.dagger}",
+                          daggerAndroidSupport  : "com.google.dagger:dagger-android-support:${versions.dagger}",
+                          daggerAndroidProcessor: "com.google.dagger:dagger-android-processor:${versions.dagger}"
+                  ],
+          ],
+          thirdParty: [
+                  jakeWharton: [
+                          retrofit2RxJava2Adapter: "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:${versions.retrofit2RxJava2Adapter}"
+                  ],
+                  square     : [
+                          moshi   : "com.squareup.moshi:moshi:${versions.moshi}",
+                          okIO    : "com.squareup.okio:okio:${versions.okIO}",
+                          okhttp  : [
+                                  okhttp            : "com.squareup.okhttp3:okhttp:${versions.okhttp}",
+                                  loggingInterceptor: "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}"
+                          ],
+                          retrofit: [
+                                  retrofit      : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
+                                  gsonConverter : "com.squareup.retrofit2:converter-gson:${versions.retrofit}",
+                                  moshiConverter: "com.squareup.retrofit2:converter-moshi:${versions.retrofit}"
+                          ]
+                  ],
+                  reactive   : [
+                          rxJava   : "io.reactivex.rxjava2:rxjava:${versions.rxJava}",
+                          rxAndroid: "io.reactivex.rxjava2:rxandroid:${versions.rxAndroid}"
+                  ],
+                  json       : "org.json:json:${versions.json}",
+                  branch     : "io.branch.sdk.android:library:${versions.branch}",
+          ],
+
+  ]
+
+  repositories {
+    mavenCentral()
+    google()
+    jcenter()
+  }
+
+  dependencies {
+    classpath 'com.google.gms:google-services:4.3.4'
+    classpath "com.akaita.android:easylauncher:1.3.1"
+    classpath 'com.android.tools.build:gradle:4.0.1'
+    classpath 'com.google.android.gms:oss-licenses-plugin:0.10.2'
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin.stdlib}"
+    classpath "androidx.benchmark:benchmark-gradle-plugin:${versions.benchMarkGradlePlugin}"
+  }
+}
+
+allprojects {
+  repositories {
+    google()
+    jcenter()
+    maven { url "https://maven.google.com" }
+    maven { url "https://www.jitpack.io" }
+    maven { url "https://s3.amazonaws.com/repo.commonsware.com" }
+  }
+}
+
+task clean(type: Delete) {
+  delete rootProject.buildDir
+}

@@ -1,0 +1,17 @@
+apply from: '../scripts/android_library_module.gradle'
+apply from: '../scripts/test_dependencies.gradle'
+
+dependencies {
+
+    kapt deps.google.dagger.daggerCompiler
+    implementation deps.google.dagger.dagger
+    kapt deps.google.dagger.daggerAndroidProcessor
+
+    kapt deps.google.jetpack.architecture.lifecycle.compiler
+    implementation deps.google.jetpack.architecture.lifecycle.extensions
+
+    implementation deps.thirdParty.reactive.rxJava
+
+    implementation deps.thirdParty.jakeWharton.retrofit2RxJava2Adapter
+
+}

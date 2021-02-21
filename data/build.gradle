@@ -1,0 +1,24 @@
+apply from: '../scripts/android_library_module.gradle'
+apply from: '../scripts/test_dependencies.gradle'
+
+dependencies {
+
+    implementation project(':domain')
+
+    implementation deps.thirdParty.square.moshi
+    implementation deps.thirdParty.square.retrofit.moshiConverter
+
+    kapt deps.google.dagger.daggerCompiler
+    implementation deps.google.dagger.dagger
+    kapt deps.google.dagger.daggerAndroidProcessor
+
+    implementation("com.squareup.moshi:moshi-kotlin:1.11.0")
+
+    implementation deps.thirdParty.reactive.rxJava
+    implementation deps.thirdParty.jakeWharton.retrofit2RxJava2Adapter
+
+    implementation deps.google.jetpack.architecture.room.ktx
+    implementation deps.google.jetpack.architecture.room.rxJava2
+    implementation deps.google.jetpack.architecture.room.runtime
+
+}
