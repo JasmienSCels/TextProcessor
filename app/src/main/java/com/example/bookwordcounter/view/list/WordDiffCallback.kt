@@ -1,12 +1,12 @@
 package com.example.bookwordcounter.view.list
 
 import androidx.recyclerview.widget.DiffUtil
-import com.nutmeg.view.models.uim.UserPostUIM
+import com.example.bookwordcounter.models.WordUIM
 
-class WordDiffCallback: DiffUtil.ItemCallback<UserPostUIM>() {
-    override fun areItemsTheSame(oldItem: UserPostUIM, newItem: UserPostUIM): Boolean =
+class WordDiffCallback: DiffUtil.ItemCallback<WordUIM>() {
+    override fun areItemsTheSame(oldItem: WordUIM, newItem: WordUIM): Boolean =
         oldItem == newItem
 
-    override fun areContentsTheSame(oldItem: UserPostUIM, newItem: UserPostUIM): Boolean =
+    override fun areContentsTheSame(oldItem: WordUIM, newItem: WordUIM): Boolean =
         oldItem == newItem
 }

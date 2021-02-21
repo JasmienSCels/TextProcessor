@@ -3,14 +3,14 @@ package com.example.bookwordcounter.view.list
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.example.post.view.databinding.UserPostViewHolderBinding
-import com.nutmeg.view.models.uim.UserPostUIM
+import com.example.bookwordcounter.databinding.WordViewHolderBinding
+import com.example.bookwordcounter.models.WordUIM
 
-internal class WordAdapter : ListAdapter<UserPostUIM, WordViewHolder>(WordDiffCallback()) {
+internal class WordAdapter : ListAdapter<WordUIM, WordViewHolder>(WordDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordViewHolder =
        WordViewHolder(
-           UserPostViewHolderBinding.inflate(
+           WordViewHolderBinding.inflate(
            LayoutInflater.from(parent.context),
            parent,
            false

@@ -1,22 +1,23 @@
 package com.example.domain.usecase
 
-import android.net.Uri
 import android.util.Log
-import com.example.domain.common.reactiveX.scheduler.SchedulerProvider
 import com.example.domain.common.errorHandling.isConnectionError
+import com.example.domain.common.reactiveX.scheduler.SchedulerProvider
 import com.example.domain.model.WordFrequencyDM
 import com.example.domain.repository.FileRepository
 import com.example.domain.usecase.base.SingleUseCase
+import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import java.io.File
 import java.net.URI
-import java.util.concurrent.Callable
 import javax.inject.Inject
 
 class LoadBookUseCase @Inject constructor(
-    private val repository: FileRepository<File>,
+    private val repository: FileRepository<Single<File>>,
     scheduler: SchedulerProvider
-) : SingleUseCase<LoadBookUseCase.Result, URI>(scheduler.io, scheduler.main) {
+) : SingleUseCase<LoadBookUseCase.Result, URI>(scheduler.io, scheduler.io) {
 
     override fun buildUseCaseSingle(uri: URI?): Single<Result> {
 //       Callable {  }repository.getFile(uri!!)
@@ -50,9 +51,14 @@ class LoadBookUseCase @Inject constructor(
 //                Result.Success(it)
 //            }
 //            .onErrorReturn(::getErrorResult)
-        val book = repository.getFile(uri!!)
-        Log.d("AHHHH", book.toString())
-        return Single.just(Result.Success(emptyList()))
+
+        return repository.getFile(uri!!)
+            .map<Result> {file ->
+                Log.d("AHHHHH", file.toString())
+                Result.Success(emptyList())
+            }
+            .onErrorReturn(::getErrorResult)
+
     }
 
 

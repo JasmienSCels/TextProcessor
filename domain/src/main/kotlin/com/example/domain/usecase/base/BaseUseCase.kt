@@ -6,8 +6,8 @@ import io.reactivex.disposables.Disposable
 /*
     Base UC to add the add the disposables to the CompositeDisposables
  */
-abstract class BaseUseCase()
-{
+abstract class BaseUseCase() {
+
     private val disposables = CompositeDisposable()
 
     open fun dispose() {

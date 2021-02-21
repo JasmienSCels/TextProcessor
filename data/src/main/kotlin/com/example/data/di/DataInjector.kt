@@ -10,7 +10,7 @@ object DataInjector {
 
     fun initialise(context: Context, scheduler: SchedulerProvider) {
         component = DaggerDataComponent.builder()
-            .dataModule(DataModule(context))
+            .dataModule(DataModule(context, scheduler))
             .build()
         with(component) {
             DomainInjector.initialise(

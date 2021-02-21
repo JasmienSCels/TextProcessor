@@ -1,6 +1,5 @@
 package com.example.domain.repository
 
-import android.net.Uri
 import java.net.URI
 
 interface FileRepository<T> {

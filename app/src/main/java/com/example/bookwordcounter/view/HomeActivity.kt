@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.bookwordcounter.BookWordCounterApp
 import com.example.bookwordcounter.R
 import com.example.bookwordcounter.databinding.HomeActivityBinding
+import com.example.bookwordcounter.di.AppInjector
 import com.example.bookwordcounter.di.ViewInjector
 import com.example.bookwordcounter.viewModel.HomeViewModel
 
@@ -20,6 +21,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         BookWordCounterApp()
+        AppInjector.initialise(this.applicationContext)
         ViewInjector.initialise()
 
 

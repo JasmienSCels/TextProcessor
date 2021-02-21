@@ -12,10 +12,11 @@ class FileLocalDS @Inject constructor(private val context: Context) :
 
     override fun get(key: String): FileRepositoryImpl.CacheEntry<File>? {
         Log.d("AHHHHHH", File(context.filesDir, key).toString())
-        return FileRepositoryImpl.CacheEntry(key, File(context.filesDir, key))
+        return null
     }
 
     override fun save(key: String, value: FileRepositoryImpl.CacheEntry<File>) {
+        Log.d("AHHHHHH", "SAVE")
         TODO("Not yet implemented")
     }
 
@@ -26,35 +27,6 @@ class FileLocalDS @Inject constructor(private val context: Context) :
     override fun clear() {
         TODO("Not yet implemented")
     }
-
-//
-//    override fun delete(key: String) {
-//        TODO("Not yet implemented")
-//    }
-//
-//    override fun clear() {
-//        TODO("Not yet implemented")
-//    }
-//
-//
-//    override fun save(key: String, value: File) {
-//        TODO("Not yet implemented")
-//    }
-//
-//    override fun get(key: String): File? {
-//        TODO("Not yet implemented")
-//    }
-
-//    override fun save(key: String, value: File) {
-//        File(context.filesDir, key)
-//    }
-//
-//    override fun get(key: String): File? {
-//        Log.d("AHHHHHH", File(context.filesDir, key).toString())
-//        return  File(context.filesDir, key)
-//    }
-
-
 }
 
 
