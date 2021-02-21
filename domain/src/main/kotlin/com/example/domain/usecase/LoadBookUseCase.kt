@@ -6,20 +6,18 @@ import com.example.domain.common.reactiveX.scheduler.SchedulerProvider
 import com.example.domain.model.WordFrequencyDM
 import com.example.domain.repository.FileRepository
 import com.example.domain.usecase.base.SingleUseCase
-import io.reactivex.Observable
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import java.io.File
 import java.net.URI
+import java.net.URL
 import javax.inject.Inject
 
 class LoadBookUseCase @Inject constructor(
     private val repository: FileRepository<Single<File>>,
     scheduler: SchedulerProvider
-) : SingleUseCase<LoadBookUseCase.Result, URI>(scheduler.io, scheduler.io) {
+) : SingleUseCase<LoadBookUseCase.Result, URL>(scheduler.io, scheduler.io) {
 
-    override fun buildUseCaseSingle(uri: URI?): Single<Result> {
+    override fun buildUseCaseSingle(url: URL?): Single<Result> {
 //       Callable {  }repository.getFile(uri!!)
 //            .map {
 //                val text = it.readText().toLowerCase()
@@ -52,7 +50,7 @@ class LoadBookUseCase @Inject constructor(
 //            }
 //            .onErrorReturn(::getErrorResult)
 
-        return repository.getFile(uri!!)
+        return repository.getFile(url!!)
             .map<Result> {file ->
                 Log.d("AHHHHH", file.toString())
                 Result.Success(emptyList())

@@ -7,6 +7,7 @@ import com.example.common.core.errorHandling.ErrorType
 import com.example.domain.usecase.LoadBookUseCase
 import io.reactivex.observers.DisposableSingleObserver
 import java.net.URI
+import java.net.URL
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
@@ -29,7 +30,7 @@ class HomeViewModel @Inject constructor(
 
     fun loadPosts() {
         _isLoading.postValue(true)
-        loadBookUseCase.execute(observer = BookObserver(), params = URI("http://www.loyalbooks.com/download/text/Railway-Children-by-E-Nesbit.txt"))
+        loadBookUseCase.execute(observer = BookObserver(), params = URL("http://www.loyalbooks.com/download/text/Railway-Children-by-E-Nesbit.txt"))
     }
 
     private fun onFetchSuccess(userPosts: Any) {

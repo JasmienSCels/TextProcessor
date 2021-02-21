@@ -9,16 +9,17 @@ import okhttp3.ResponseBody
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Streaming
 import javax.inject.Inject
 
-class BookApiService  @Inject constructor(context: Context) {
+class BookApiService @Inject constructor(context: Context) {
 
     fun loadBook() =
         service.getBook()
 
 
     private interface BookService {
-      // @Streaming
+        @Streaming
         @GET("Railway-Children-by-E-Nesbit.txt")
         fun getBook(): Single<ResponseBody>
     }
@@ -30,7 +31,7 @@ class BookApiService  @Inject constructor(context: Context) {
     private val retrofit: Retrofit by lazy {
         getCommonRetrofit(context)
             .newBuilder()
-           // .addConverterFactory(MoshiConverterFactory.create(moshi))
+            // .addConverterFactory(MoshiConverterFactory.create(moshi))
             .addConverterFactory(ScalarsConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()

@@ -3,6 +3,7 @@ package com.example.data.repository
 import com.example.domain.repository.FileRepository
 import io.reactivex.Single
 import java.net.URI
+import java.net.URL
 import javax.inject.Inject
 
 class FileRepositoryImpl<T> @Inject constructor(
@@ -10,11 +11,11 @@ class FileRepositoryImpl<T> @Inject constructor(
     private val remoteDS: RemoteDS<T>
 ) : FileRepository<Single<T>> {
 
-    override fun getFile(uri: URI): Single<T> =
-       fetchAndCacheFile(uri)
+    override fun getFile(url: URL): Single<T> =
+       fetchAndCacheFile(url)
 
-    private fun fetchAndCacheFile(uri: URI): Single<T> =
-        remoteDS.fetch(uri)
+    private fun fetchAndCacheFile(url: URL): Single<T> =
+        remoteDS.fetch(url)
 //            .also {
 //            localDS.save(
 //                key = uri.toString(),
@@ -35,7 +36,7 @@ class FileRepositoryImpl<T> @Inject constructor(
     }
 
     interface RemoteDS<T> {
-        fun fetch(uri:  URI): Single<T>
+        fun fetch(url: URL): Single<T>
     }
 
 }
