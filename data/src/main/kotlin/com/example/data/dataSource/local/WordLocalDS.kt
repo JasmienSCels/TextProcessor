@@ -5,6 +5,8 @@ import com.example.data.model.toDM
 import com.example.data.model.toLM
 import com.example.data.repository.WordRepositoryImpl
 import com.example.domain.model.WordFrequencyDM
+import io.reactivex.Completable
+import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -13,12 +15,13 @@ class WordLocalDS @Inject constructor(
     private val wordDAO: WordDAO) :
     WordRepositoryImpl.LocalDS<WordFrequencyDM> {
 
-    override fun save(model: WordFrequencyDM) {
+    override fun save(model: WordFrequencyDM): Completable {
         val lm = model.toLM()
         wordDAO.insert(lm)
+        return Completable.complete()
     }
 
-    override fun fetch(title: String): WordFrequencyDM {
+    override fun fetch(title: String): Single<WordFrequencyDM> {
         TODO("Not yet implemented")
     }
 

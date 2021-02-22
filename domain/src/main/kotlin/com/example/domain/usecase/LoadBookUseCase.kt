@@ -8,7 +8,10 @@ import com.example.domain.model.WordFrequencyDM
 import com.example.domain.repository.FileRepository
 import com.example.domain.repository.WordRepository
 import com.example.domain.usecase.base.SingleUseCase
+import io.reactivex.Flowable.just
+import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import okhttp3.ResponseBody
 import java.io.File
 import java.io.FileOutputStream
@@ -21,12 +24,17 @@ class LoadBookUseCase @Inject constructor(
     private val context: Context,
     private val fileRepository: FileRepository<Single<ResponseBody>>,
     private val wordRepository: WordRepository<WordFrequencyDM>,
-    scheduler: SchedulerProvider
-) : SingleUseCase<LoadBookUseCase.Result, String>(scheduler.io, scheduler.io) {
+    private val scheduler: SchedulerProvider
+) : SingleUseCase<LoadBookUseCase.Result, String>(scheduler.io, scheduler.main) {
 
     override fun buildUseCaseSingle(title: String?): Single<Result> {
-        val local = wordRepository.getWords()
-        Log.d("AHHHH", local.toString())
+
+        wordRepository.getWords().subscribeOn(Schedulers.io()).observeOn(Schedulers.io())
+
+            .doOnError {
+            Log.d("AHHHHH", it.message)
+        }.forEach { Log.d("AHHHH", it.toString()) }
+
 
         return fileRepository.getFile(title!!)
             .map { rb ->

@@ -14,7 +14,6 @@ class BookWordCounterApp: Application() {
         initDagger()
     }
 
-
     private fun initDagger() {
         DaggerApplicationComponent
             .builder()
