@@ -5,6 +5,7 @@ import com.example.domain.repository.FileRepository
 import com.example.domain.repository.WordRepository
 import dagger.Component
 import io.reactivex.Single
+import okhttp3.ResponseBody
 import java.io.File
 import javax.inject.Provider
 import javax.inject.Singleton
@@ -13,7 +14,7 @@ import javax.inject.Singleton
 @Component(modules = [DataModule::class])
 interface DataComponent {
 
-    fun getFileRepository(): Provider<FileRepository<Single<File>>>
+    fun getFileRepository(): Provider<FileRepository<Single<ResponseBody>>>
 
     fun getWordRepository(): Provider<WordRepository<WordFrequencyDM>>
 

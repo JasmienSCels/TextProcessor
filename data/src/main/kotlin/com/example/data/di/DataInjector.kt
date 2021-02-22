@@ -14,6 +14,7 @@ object DataInjector {
             .build()
         with(component) {
             DomainInjector.initialise(
+                context,
                 getFileRepository(),
                 getWordRepository(),
                 scheduler

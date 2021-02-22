@@ -17,7 +17,7 @@ dependencies {
     implementation deps.thirdParty.square.okhttp.loggingInterceptor
     implementation deps.thirdParty.square.retrofit.gsonConverter
 
-
+    //implementation "android.arch.persistence.room:runtime:2.2.6"
 
     implementation deps.thirdParty.reactive.rxJava
     implementation deps.thirdParty.reactive.rxAndroid
@@ -26,6 +26,7 @@ dependencies {
     implementation deps.google.jetpack.architecture.room.ktx
     implementation deps.google.jetpack.architecture.room.rxJava2
     implementation deps.google.jetpack.architecture.room.runtime
+    kapt deps.google.jetpack.architecture.room.compiler
 
     implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
 

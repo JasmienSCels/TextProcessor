@@ -1,5 +1,6 @@
 package com.example.domain.usecase
 
+import android.content.Context
 import android.util.Log
 import com.example.domain.common.errorHandling.isConnectionError
 import com.example.domain.common.reactiveX.scheduler.SchedulerProvider
@@ -8,23 +9,29 @@ import com.example.domain.repository.FileRepository
 import com.example.domain.repository.WordRepository
 import com.example.domain.usecase.base.SingleUseCase
 import io.reactivex.Single
+import okhttp3.ResponseBody
 import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
 import java.util.*
 import javax.inject.Inject
 
 class LoadBookUseCase @Inject constructor(
-    private val fileRepository: FileRepository<Single<File>>,
+    private val context: Context,
+    private val fileRepository: FileRepository<Single<ResponseBody>>,
     private val wordRepository: WordRepository<WordFrequencyDM>,
     scheduler: SchedulerProvider
 ) : SingleUseCase<LoadBookUseCase.Result, String>(scheduler.io, scheduler.io) {
 
     override fun buildUseCaseSingle(title: String?): Single<Result> {
-        val words = wordRepository.getWords()
-        Log.d("AHHHH", words.toString())
+        val local = wordRepository.getWords()
+        Log.d("AHHHH", local.toString())
 
         return fileRepository.getFile(title!!)
-            .map { file ->
-                val text = file.readText().toLowerCase(Locale.ROOT)
+            .map { rb ->
+                val file = toFile(title, rb)
+                val text = file!!.readText().toLowerCase(Locale.ROOT)
                 val r = Regex("""\p{javaLowerCase}+""")
                 val matches = r.findAll(text!!)
                 val wordGroups = matches.map { it.value }
@@ -37,14 +44,39 @@ class LoadBookUseCase @Inject constructor(
                     wordRepository.saveWords(wordFrequencyDM)
                     wordList.add(wordFrequencyDM)
                 }
-                wordList.toList()
+                wordList.toSet()
             }.map<Result> {
-
                 Result.Success(it)
             }
             .onErrorReturn {
                 getErrorResult(it)
             }
+    }
+
+    private fun toFile(title: String, body: ResponseBody?): File? {
+        if (body == null) return null
+        var byteStream: InputStream? = null;
+        var buffer: FileOutputStream? = null;
+
+        try {
+            byteStream = body.byteStream();
+            buffer = FileOutputStream(context.filesDir.toString() + "/" + title);
+            var size: Int
+            while (byteStream.read().also { size = it } != -1) {
+                buffer!!.write(size)
+            }
+            return File(context.filesDir.toString() + "/" + title)
+        } catch (e: IOException) {
+            return null;
+        } finally {
+            if (byteStream != null) {
+                byteStream.close();
+            }
+            if (buffer != null) {
+                buffer.close();
+            }
+        }
+
     }
 
     //Todo: Calculate
@@ -56,7 +88,7 @@ class LoadBookUseCase @Inject constructor(
     }
 
     sealed class Result {
-        data class Success(val wordFrequencyList: List<WordFrequencyDM>) : Result()
+        data class Success(val wordFrequencyList: Set<WordFrequencyDM>) : Result()
         object ErrorConnection : Result()
         data class ErrorUnknown(val throwable: Throwable) : Result()
     }

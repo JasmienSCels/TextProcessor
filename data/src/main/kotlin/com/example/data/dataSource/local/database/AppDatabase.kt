@@ -16,9 +16,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun wordDAO(): WordDAO
 
     companion object {
-        const val DATABASE_NAME = "app_database"
+        private const val DATABASE_NAME = "app_database"
 
-        @VisibleForTesting
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
@@ -31,8 +30,6 @@ abstract class AppDatabase : RoomDatabase() {
 
         private fun buildDatabase(context: Context): AppDatabase {
             return Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
-                .fallbackToDestructiveMigration()
-                .addMigrations()
                 .build()
         }
 

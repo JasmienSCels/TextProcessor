@@ -4,7 +4,10 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(indices = [Index(value = ["id"], unique = true)])
+@Entity(
+    tableName = "WordLM",
+    indices = [Index(value = ["id"], unique = true)]
+)
 data class WordLM(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,

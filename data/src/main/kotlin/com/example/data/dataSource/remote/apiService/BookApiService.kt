@@ -25,7 +25,7 @@ class BookApiService @Inject constructor(context: Context) {
         @GET("{title}")
         fun getBook(
            @Path(value = "title") title: String
-       ): Single<ResponseBody>
+       ): Single<ResponseBody?>
     }
 
     private val service by lazy {

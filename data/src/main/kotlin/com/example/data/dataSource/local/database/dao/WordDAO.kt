@@ -8,7 +8,7 @@ import com.example.data.model.WordLM
 abstract class WordDAO : BaseDAO<WordLM> {
 
     @Query("SELECT * FROM WordLM")
-    abstract fun loadAllWords(): Set<WordLM>
+    abstract fun loadAllWords(): List<WordLM>
 
     @Query("SELECT * FROM WordLM WHERE id = :id")
     abstract fun loadWord(id: Long): WordLM
