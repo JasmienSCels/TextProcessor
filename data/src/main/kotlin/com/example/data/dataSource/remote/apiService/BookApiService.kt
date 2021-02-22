@@ -9,19 +9,23 @@ import okhttp3.ResponseBody
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
 import retrofit2.http.Streaming
 import javax.inject.Inject
 
 class BookApiService @Inject constructor(context: Context) {
 
-    fun loadBook() =
-        service.getBook()
+    fun loadBook(title: String) =
+        service.getBook(title)
 
 
     private interface BookService {
-        @Streaming
-        @GET("Railway-Children-by-E-Nesbit.txt")
-        fun getBook(): Single<ResponseBody>
+       @Streaming
+        @GET("{title}")
+        fun getBook(
+           @Path(value = "title") title: String
+       ): Single<ResponseBody>
     }
 
     private val service by lazy {

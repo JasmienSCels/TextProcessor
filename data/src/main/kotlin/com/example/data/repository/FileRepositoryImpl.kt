@@ -2,26 +2,19 @@ package com.example.data.repository
 
 import com.example.domain.repository.FileRepository
 import io.reactivex.Single
-import java.net.URI
-import java.net.URL
 import javax.inject.Inject
 
 class FileRepositoryImpl<T> @Inject constructor(
-    private val localDS: LocalDS<String, CacheEntry<T>>,
+    private val localDS: LocalDS<String, T>,
     private val remoteDS: RemoteDS<T>
 ) : FileRepository<Single<T>> {
 
-    override fun getFile(url: URL): Single<T> =
-       fetchAndCacheFile(url)
+    override fun getFile(title: String): Single<T> =
+        fetchAndCacheFile(title)
 
-    private fun fetchAndCacheFile(url: URL): Single<T> =
-        remoteDS.fetch(url)
-//            .also {
-//            localDS.save(
-//                key = uri.toString(),
-//                value = CacheEntry(key = uri.toString(), value = it)
-//            )
-//        }
+    private fun fetchAndCacheFile(title: String): Single<T> {
+        return remoteDS.fetch(title)
+    }
 
     data class CacheEntry<T>(
         val key: String,
@@ -29,14 +22,14 @@ class FileRepositoryImpl<T> @Inject constructor(
     )
 
     interface LocalDS<in Key : Any, T> {
-        fun get(key: Key): T?
+        fun get(key: Key): Single<T>?
         fun save(key: Key, value: T)
         fun delete(key: Key)
         fun clear()
     }
 
     interface RemoteDS<T> {
-        fun fetch(url: URL): Single<T>
+        fun fetch(title: String): Single<T>
     }
 
 }

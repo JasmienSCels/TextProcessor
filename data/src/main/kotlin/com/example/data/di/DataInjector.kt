@@ -10,11 +10,12 @@ object DataInjector {
 
     fun initialise(context: Context, scheduler: SchedulerProvider) {
         component = DaggerDataComponent.builder()
-            .dataModule(DataModule(context, scheduler))
+            .dataModule(DataModule(context))
             .build()
         with(component) {
             DomainInjector.initialise(
                 getFileRepository(),
+                getWordRepository(),
                 scheduler
             )
         }

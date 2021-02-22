@@ -1,7 +1,8 @@
 package com.example.data.di
 
-import com.example.domain.common.reactiveX.scheduler.SchedulerProvider
+import com.example.domain.model.WordFrequencyDM
 import com.example.domain.repository.FileRepository
+import com.example.domain.repository.WordRepository
 import dagger.Component
 import io.reactivex.Single
 import java.io.File
@@ -14,6 +15,6 @@ interface DataComponent {
 
     fun getFileRepository(): Provider<FileRepository<Single<File>>>
 
-//    fun getSchedulerProvider(): SchedulerProvider
+    fun getWordRepository(): Provider<WordRepository<WordFrequencyDM>>
 
 }

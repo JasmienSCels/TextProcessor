@@ -1,13 +1,10 @@
 package com.example.domain.repository
 
-import java.net.URI
-import java.net.URL
-
 interface FileRepository<T> {
 
     // fun getLocalFiles(): List<File>
 
-    fun getFile(url: URL): T
+    fun getFile(title: String): T
 //
 //    fun deleteFile(file: File)
 //

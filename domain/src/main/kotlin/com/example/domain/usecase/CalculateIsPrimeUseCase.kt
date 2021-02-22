@@ -22,6 +22,7 @@ class CalculateIsPrimeUseCase @Inject constructor(scheduler: SchedulerProvider) 
 
         return Observable.fromIterable(list)
             .map {
+                if (it.frequency == null)throw UnknownError()
                 when (it.frequency) {
                     1 -> it.isPrime = false
                     else -> for (i in 2..it.frequency / 2) {
