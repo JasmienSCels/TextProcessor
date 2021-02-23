@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        app:cardBackgroundColor="#7ebab5"
+        app:cardBackgroundColor="@{wordUIM.isPrime ? @color/purple_200 :@color/teal_200}"
         card_view:cardCornerRadius="8dp"
         card_view:cardElevation="8dp"
         android:layout_margin="8dp"
