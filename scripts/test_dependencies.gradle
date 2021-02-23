@@ -9,4 +9,6 @@ dependencies {
 
     testImplementation deps.thirdParty.json
     testImplementation deps.google.jetpack.foundation.test.junit
+
+    androidTestImplementation deps.google.jetpack.foundation.test.mockK
 }
