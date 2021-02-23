@@ -7,6 +7,7 @@ import com.example.bookwordcounter.common.base.viewModel.BaseViewModel
 import com.example.bookwordcounter.models.WordUIM
 import com.example.bookwordcounter.models.toUMI
 import com.example.common.core.errorHandling.ErrorType
+import com.example.domain.model.WordFrequencyDM
 import com.example.domain.usecase.LoadBookUseCase
 import io.reactivex.observers.DisposableObserver
 import javax.inject.Inject
@@ -16,13 +17,13 @@ class HomeViewModel @Inject constructor(
 ) : BaseViewModel(loadBookUseCase) {
 
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
-    private val _words: MutableLiveData<Set<WordUIM>> = MutableLiveData()
+    private val _words: MutableLiveData<WordUIM> = MutableLiveData()
     private val _errorState: MutableLiveData<ErrorType> = MutableLiveData()
 
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
-    val words: LiveData<Set<WordUIM>>
+    val words: LiveData<WordUIM>
         get() = _words
 
     val errorState: LiveData<ErrorType>
@@ -37,30 +38,26 @@ class HomeViewModel @Inject constructor(
         )
     }
 
-    private fun onFetchSuccess(word: Set<WordUIM>) {
-        _isLoading.postValue(false)
-        _words.postValue(word)
-    }
-
-    private inner class BookObserver : DisposableObserver<LoadBookUseCase.Result>() {
+    private inner class BookObserver : DisposableObserver<WordFrequencyDM?>() {
 
         override fun onComplete() {
-           Log.d("onComplete", words.toString())
+            Log.d(TAG, "onComplete")
+            _isLoading.postValue(false)
         }
 
-        override fun onNext(result: LoadBookUseCase.Result) {
-            _isLoading.postValue(false)
-            when (result) {
-                is LoadBookUseCase.Result.Success -> onFetchSuccess(result.wordFrequencyDM.toUMI())
-                is LoadBookUseCase.Result.ErrorConnection -> _errorState.postValue(ErrorType.NETWORK_CONNECTION_ERROR)
-                is LoadBookUseCase.Result.ErrorUnknown -> _errorState.postValue(ErrorType.UNKNOWN_ERROR)
-            }
+        override fun onNext(result: WordFrequencyDM) {
+            _words.value = result.toUMI()
         }
 
         override fun onError(e: Throwable) {
+            Log.d(TAG, "onError " + e.localizedMessage)
             _isLoading.postValue(false)
             _errorState.postValue(ErrorType.UNKNOWN_ERROR)
         }
+    }
+
+    private companion object {
+        val TAG = HomeViewModel::class.java.simpleName
     }
 
 }

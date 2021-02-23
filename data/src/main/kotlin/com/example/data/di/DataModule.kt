@@ -24,7 +24,7 @@ internal class DataModule(private val context: Context) {
     fun provideUserApiService(): BookApiService = BookApiService(context)
 
     @Provides
-    fun provideFileRemoteDS(service: BookApiService): FileRepositoryImpl.RemoteDS<ResponseBody?> =
+    fun provideFileRemoteDS(service: BookApiService): FileRepositoryImpl.RemoteDS<ResponseBody> =
         FileRemoteDS(service)
 
     @Provides
@@ -32,8 +32,8 @@ internal class DataModule(private val context: Context) {
         WordLocalDS(dao)
 
     @Provides
-    fun provideFileRepository(remoteDS: FileRemoteDS): FileRepository<Single<ResponseBody?>> =
-        FileRepositoryImpl<ResponseBody?>(remoteDS)
+    fun provideFileRepository(remoteDS: FileRemoteDS): FileRepository<Single<ResponseBody>> =
+        FileRepositoryImpl<ResponseBody>(remoteDS)
 
     @Provides
     fun provideWordRepository(localDS: WordLocalDS): WordRepository<WordFrequencyDM> =

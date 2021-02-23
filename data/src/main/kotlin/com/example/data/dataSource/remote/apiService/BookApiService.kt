@@ -25,7 +25,7 @@ class BookApiService @Inject constructor(context: Context) {
         @GET("{title}")
         fun getBook(
            @Path(value = "title") title: String
-       ): Single<ResponseBody?>
+       ): Single<ResponseBody>
     }
 
     private val service by lazy {
@@ -35,16 +35,10 @@ class BookApiService @Inject constructor(context: Context) {
     private val retrofit: Retrofit by lazy {
         getCommonRetrofit(context)
             .newBuilder()
-            // .addConverterFactory(MoshiConverterFactory.create(moshi))
             .addConverterFactory(ScalarsConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
     }
 
-    private val moshi: Moshi by lazy {
-        Moshi
-            .Builder()
-            .build()
-    }
 
 }

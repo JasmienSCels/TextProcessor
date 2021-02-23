@@ -1,6 +1,7 @@
 package com.example.bookwordcounter.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -66,15 +67,20 @@ class HomeActivity : AppCompatActivity() {
             })
         }
 
-    private fun handleIncomingWord(words: Set<WordUIM>) {
-        adapter.submitList(words.toList())
+    private fun handleIncomingWord(word: WordUIM) {
+        wordList.add(word)
+        adapter.apply {
+            submitList(wordList)
+            notifyDataSetChanged()
+        }
     }
 
     private fun handleLoadingStateChange(isLoading: Boolean) =
         if (isLoading) dataBinding.progressBar.visibility =
             View.VISIBLE else dataBinding.progressBar.visibility = View.GONE
 
-    private fun handleError(error: ErrorType) =
+    private fun handleError(error: ErrorType) {
+        adapter.currentList.clear()
         when (error) {
             ErrorType.NETWORK_CONNECTION_ERROR -> Snackbar.make(
                 dataBinding.root,
@@ -92,12 +98,12 @@ class HomeActivity : AppCompatActivity() {
                 Snackbar.LENGTH_LONG
             ).show()
         }
+    }
 
     private fun setUpRecyclerView() {
         with(dataBinding) {
             adapter = WordAdapter().also { recyclerView.adapter = it }
         }
     }
-
 
 }
