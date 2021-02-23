@@ -9,6 +9,7 @@ import com.example.domain.repository.FileRepository
 import com.example.domain.repository.WordRepository
 import com.example.domain.usecase.base.ObservableUseCase
 import io.reactivex.Observable
+import io.reactivex.ObservableOnSubscribe
 import io.reactivex.Single
 import io.reactivex.internal.operators.observable.ObservableSwitchIfEmpty
 import okhttp3.ResponseBody
@@ -24,13 +25,13 @@ class LoadBookUseCase @Inject constructor(
     private val context: Context,
     private val fileRepository: FileRepository<Single<ResponseBody>>,
     private val wordRepository: WordRepository<WordFrequencyDM>,
-    private val scheduler: SchedulerProvider
+    scheduler: SchedulerProvider
 ) : ObservableUseCase<WordFrequencyDM?, String>(scheduler.io, scheduler.main) {
 
 
     override fun buildUseCaseObservable(title: String?): Observable<WordFrequencyDM?> {
-        fileRepository.getFile(title!!)
-        return ObservableSwitchIfEmpty(getRemote(title), getRemote(title))
+        getRemote(title).subscribe()
+        return ObservableSwitchIfEmpty(wordRepository.getWords(), wordRepository.getWords())
 
     }
 
@@ -39,11 +40,9 @@ class LoadBookUseCase @Inject constructor(
      */
     private fun getRemote(title: String?): Observable<WordFrequencyDM> {
         Log.d(TAG, "getRemote")
-        fileRepository.getFile(title!!)
         return Observable.create { emitter ->
             try {
                 fileRepository.getFile(title!!)
-                fileRepository.getFile(title!!).toObservable()
                     .map pairs@{ rb ->
                         val file = toFile(title, rb)
                         val text = file!!.readText().toLowerCase(Locale.ROOT)

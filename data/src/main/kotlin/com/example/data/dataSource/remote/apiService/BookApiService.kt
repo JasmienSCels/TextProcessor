@@ -6,6 +6,7 @@ import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import com.squareup.moshi.Moshi
 import io.reactivex.Single
 import okhttp3.ResponseBody
+import okhttp3.internal.wait
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
@@ -33,7 +34,7 @@ class BookApiService @Inject constructor(context: Context) {
     }
 
     private val retrofit: Retrofit by lazy {
-        getCommonRetrofit(context)
+        getCommonRetrofit()
             .newBuilder()
             .addConverterFactory(ScalarsConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

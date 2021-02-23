@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
 private var retrofit: Retrofit? = null
 private var okHttp: OkHttpClient? = null
 
-fun getCommonRetrofit(context: Context): Retrofit = retrofit ?: initRetrofit(context)
+fun getCommonRetrofit(): Retrofit = retrofit ?: initRetrofit()
 
 fun getCommonOkHttp(): OkHttpClient = okHttp ?: initOkHttp()
 
@@ -33,7 +33,7 @@ private fun initOkHttp(): OkHttpClient =
         }
 
 
-private fun initRetrofit(context: Context) =
+private fun initRetrofit() =
     Retrofit
         .Builder()
         .client(getCommonOkHttp())

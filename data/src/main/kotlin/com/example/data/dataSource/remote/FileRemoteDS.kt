@@ -13,7 +13,6 @@ class FileRemoteDS @Inject constructor(
     FileRepositoryImpl.RemoteDS<ResponseBody> {
 
     override fun fetch(title: String): Single<ResponseBody> {
-        Log.d("AHHHHH", "LOADING")
         return service.loadBook(title)
     }
 
