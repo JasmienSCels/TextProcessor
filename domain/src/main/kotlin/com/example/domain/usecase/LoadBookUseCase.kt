@@ -30,9 +30,7 @@ class LoadBookUseCase @Inject constructor(
 
 
     override fun buildUseCaseObservable(title: String?): Observable<WordFrequencyDM?> {
-        getRemote(title).subscribe()
         return ObservableSwitchIfEmpty(wordRepository.getWords(), wordRepository.getWords())
-
     }
 
     /*

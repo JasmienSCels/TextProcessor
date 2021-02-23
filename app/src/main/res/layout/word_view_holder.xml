@@ -39,7 +39,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="0"
+                android:text="@{Integer.toString(wordUIM.frequency)}"
                 android:textColor="#383e42"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -20,7 +20,6 @@ class BookApiService @Inject constructor(context: Context) {
     fun loadBook(title: String) =
         service.getBook(title)
 
-
     private interface BookService {
        @Streaming
         @GET("{title}")
