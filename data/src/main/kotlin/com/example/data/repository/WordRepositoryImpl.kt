@@ -13,21 +13,21 @@ class WordRepositoryImpl<T> @Inject constructor(
 ) : WordRepository<T> {
 
     override fun getWords(): Observable<T> {
-        return Observable.create {emitter ->
-            try {
-                localDS.fetchAll().map{
-                    emitter.onNext(it)
-                }
-                emitter.onComplete()
+            return Observable.create {emitter ->
+                try {
+                    localDS.fetchAll().map{
+                        Log.d("AHHHH", it.toString())
+                        emitter.onNext(it)
+                    }
+                   emitter.onComplete()
             } catch (e: Exception) {
-                Log.d("AHHHHH", e.localizedMessage)
+                Log.d(TAG, e.localizedMessage)
                 emitter.onError(e)
             }
-
         }
     }
 
-    override fun saveWords(model: T): Completable {
+    override fun saveWord(model: T): Completable {
         return localDS.save(model)
     }
 
@@ -45,6 +45,9 @@ class WordRepositoryImpl<T> @Inject constructor(
 
     }
 
+    private companion object {
+        val TAG = WordRepositoryImpl::class.simpleName
+    }
 
 
 }

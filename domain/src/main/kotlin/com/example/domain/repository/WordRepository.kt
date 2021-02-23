@@ -5,7 +5,7 @@ import io.reactivex.Observable
 
 interface WordRepository<T> {
 
-    fun saveWords(model: T) : Completable
+    fun saveWord(model: T) : Completable
 
     fun getWords(): Observable<T>
 }

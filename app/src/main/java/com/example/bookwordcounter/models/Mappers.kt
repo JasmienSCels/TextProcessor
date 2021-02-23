@@ -2,9 +2,9 @@ package com.example.bookwordcounter.models
 
 import com.example.domain.model.WordFrequencyDM
 
-internal fun Set<WordFrequencyDM>.toUMI() = map { it.toUMI() }
+internal fun Set<WordFrequencyDM>.toUMI(): Set<WordUIM> = map { it.toUMI() }.toSet()
 
-private fun WordFrequencyDM?.toUMI(): WordUIM = when (this) {
+fun WordFrequencyDM?.toUMI(): WordUIM = when (this) {
     null -> WordUIM(
         word = "Unknown",
         frequency = 0,

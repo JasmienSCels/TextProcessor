@@ -23,6 +23,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var dataBinding: HomeActivityBinding
     private lateinit var adapter: WordAdapter
+    private var wordList = mutableListOf<WordUIM>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,12 +62,12 @@ class HomeActivity : AppCompatActivity() {
             })
 
             words.observe(this@HomeActivity, Observer {
-                handleWords(it)
+                handleIncomingWord(it)
             })
         }
 
-    private fun handleWords(userPosts: List<WordUIM>) {
-        adapter.submitList(userPosts)
+    private fun handleIncomingWord(words: Set<WordUIM>) {
+        adapter.submitList(words.toList())
     }
 
     private fun handleLoadingStateChange(isLoading: Boolean) =

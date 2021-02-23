@@ -9,11 +9,7 @@ class FileRepositoryImpl<T> @Inject constructor(
 ) : FileRepository<Single<T>> {
 
     override fun getFile(title: String): Single<T> =
-        fetchAndCacheFile(title)
-
-    private fun fetchAndCacheFile(title: String): Single<T> {
-        return remoteDS.fetch(title)
-    }
+        remoteDS.fetch(title)
 
     interface RemoteDS<T> {
         fun fetch(title: String): Single<T>
