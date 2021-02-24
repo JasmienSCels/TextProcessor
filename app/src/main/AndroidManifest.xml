@@ -3,7 +3,7 @@
     package="com.example.bookwordcounter">
 
     <application
-        android:name=".BookWordCounterApp"
+        android:name="com.example.textProcessor.TextProcessorApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -13,7 +13,7 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".view.HomeActivity"
+            android:name="com.example.textProcessor.view.HomeActivity"
             android:screenOrientation="sensorPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,7 +1,7 @@
-package com.example.bookwordcounter.di
+package com.example.textProcessor.di
 
 import android.content.Context
-import com.example.bookwordcounter.common.reactiveX.DefaultSchedulerProvider
+import com.example.textProcessor.common.reactiveX.DefaultSchedulerProvider
 import com.example.data.di.DataInjector
 import com.example.domain.di.DomainInjector
 
@@ -12,6 +12,8 @@ object AppInjector {
     }
 
     private fun initialiseDependencies(context: Context) {
-        DataInjector.initialise(context, DefaultSchedulerProvider())
+        DataInjector.initialise(context,
+            DefaultSchedulerProvider()
+        )
     }
 }

@@ -55,7 +55,7 @@
 
         <variable
             name="wordUIM"
-            type="com.example.bookwordcounter.models.WordUIM" />
+            type="com.example.textProcessor.models.WordUIM" />
 
     </data>
 

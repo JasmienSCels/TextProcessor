@@ -1,4 +1,4 @@
-package com.example.bookwordcounter.common.reactiveX
+package com.example.textProcessor.common.reactiveX
 
 import com.example.domain.common.reactiveX.scheduler.SchedulerProvider
 import io.reactivex.Scheduler

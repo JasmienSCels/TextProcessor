@@ -1,9 +1,10 @@
 <resources>
-  <string name="app_name">Text Processor</string>
+  <string name="app_name">Railway Children</string>
 
   <!--Errors -->
   <string name="unknown_error">An unknown error has occurred</string>
   <string name="network_error">Network Error Connection</string>
+  <string name="data_not_cached_error">Hold tight! We are hard at work!</string>
 
 
 </resources>

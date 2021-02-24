@@ -1,4 +1,4 @@
-package com.example.bookwordcounter.models
+package com.example.textProcessor.models
 
 data class WordUIM(
     val word: String,

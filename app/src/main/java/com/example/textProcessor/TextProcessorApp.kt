@@ -1,15 +1,15 @@
-package com.example.bookwordcounter
+package com.example.textProcessor
 
 import android.app.Application
 import android.content.Context
-import com.example.bookwordcounter.di.AppInjector
+import com.example.textProcessor.di.AppInjector
 import com.example.bookwordcounter.di.DaggerApplicationComponent
 
-class BookWordCounterApp: Application() {
+class TextProcessorApp: Application() {
 
     override fun onCreate() {
         super.onCreate()
-        instance = this@BookWordCounterApp
+        instance = this@TextProcessorApp
         initDagger()
     }
 

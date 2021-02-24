@@ -1,4 +1,4 @@
-package com.example.bookwordcounter.models
+package com.example.textProcessor.models
 
 import com.example.domain.model.WordFrequencyDM
 
@@ -10,7 +10,7 @@ fun WordFrequencyDM?.toUMI(): WordUIM = when (this) {
     )
     else -> WordUIM(
         word = word ?: "Unknown",
-        frequency = frequency?: 0,
+        frequency = frequency ?: 0,
         isPrime = isPrime ?: false
     )
 }

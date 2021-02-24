@@ -1,8 +1,8 @@
-package com.example.bookwordcounter.view.list
+package com.example.textProcessor.view.list
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookwordcounter.databinding.WordViewHolderBinding
-import com.example.bookwordcounter.models.WordUIM
+import com.example.textProcessor.models.WordUIM
 
 class WordViewHolder(private val dataBinding: WordViewHolderBinding) :
     RecyclerView.ViewHolder(dataBinding.root) {

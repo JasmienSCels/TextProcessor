@@ -1,13 +1,12 @@
-package com.example.bookwordcounter.viewModel
+package com.example.textProcessor.viewModel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.bookwordcounter.common.base.viewModel.BaseViewModel
-import com.example.bookwordcounter.models.WordUIM
-import com.example.bookwordcounter.models.toUMI
+import com.example.textProcessor.common.base.viewModel.BaseViewModel
+import com.example.textProcessor.models.WordUIM
+import com.example.textProcessor.models.toUMI
 import com.example.domain.common.errorHandling.ErrorType
-import com.example.domain.common.errorHandling.NotCachedException
 import com.example.domain.common.errorHandling.isConnectionError
 import com.example.domain.common.errorHandling.isNotCachedError
 import com.example.domain.model.WordFrequencyDM

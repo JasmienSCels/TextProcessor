@@ -1,4 +1,4 @@
-package com.example.bookwordcounter.common.base.viewModel
+package com.example.textProcessor.common.base.viewModel
 
 import androidx.lifecycle.ViewModel
 import com.example.domain.usecase.base.BaseUseCase

@@ -1,5 +1,6 @@
-package com.example.bookwordcounter.di
+package com.example.textProcessor.di
 
+import com.example.bookwordcounter.di.DaggerViewComponent
 import com.example.domain.di.DomainInjector
 
 object ViewInjector {
@@ -7,8 +8,7 @@ object ViewInjector {
     lateinit var component: ViewComponent
 
     fun initialise() {
-        component = DaggerViewComponent
-            .builder()
+        component = DaggerViewComponent.builder()
             .domainComponent(DomainInjector.component)
             .build()
     }

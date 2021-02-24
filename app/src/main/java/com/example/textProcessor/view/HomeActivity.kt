@@ -1,4 +1,4 @@
-package com.example.bookwordcounter.view
+package com.example.textProcessor.view
 
 import android.os.Bundle
 import android.view.View
@@ -6,14 +6,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.bookwordcounter.BookWordCounterApp
+import com.example.textProcessor.TextProcessorApp
 import com.example.bookwordcounter.R
 import com.example.bookwordcounter.databinding.HomeActivityBinding
-import com.example.bookwordcounter.di.AppInjector
-import com.example.bookwordcounter.di.ViewInjector
-import com.example.bookwordcounter.models.WordUIM
-import com.example.bookwordcounter.view.list.WordAdapter
-import com.example.bookwordcounter.viewModel.HomeViewModel
+import com.example.textProcessor.di.AppInjector
+import com.example.textProcessor.di.ViewInjector
+import com.example.textProcessor.models.WordUIM
+import com.example.textProcessor.view.list.WordAdapter
+import com.example.textProcessor.viewModel.HomeViewModel
 import com.example.domain.common.errorHandling.ErrorType
 import com.google.android.material.snackbar.Snackbar
 
@@ -28,7 +28,7 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        BookWordCounterApp()
+        TextProcessorApp()
         AppInjector.initialise(this.applicationContext)
         ViewInjector.initialise()
 
@@ -86,7 +86,7 @@ class HomeActivity : AppCompatActivity() {
             ).show()
             ErrorType.NOT_CACHED_ERROR -> Snackbar.make(
                 dataBinding.root,
-                "Hold tight! We are hard at work!",
+                R.string.data_not_cached_error,
                 Snackbar.LENGTH_LONG
             ).show()
             else -> Snackbar.make(
@@ -99,7 +99,8 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setUpRecyclerView() {
         with(dataBinding) {
-            adapter = WordAdapter().also { recyclerView.adapter = it }
+            adapter = WordAdapter()
+                .also { recyclerView.adapter = it }
         }
     }
 
