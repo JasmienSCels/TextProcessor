@@ -23,14 +23,14 @@ The next time that the user accesses the application, the results are loaded fro
 *Words displayed on a light purple card are Prime numbers, words on teal cards are not Prime. 
 
 
-### A word from the developer:### 
+### A word from the developer: ### 
 
 Thank you for taking the time to inspect this project. 
 I am always looking to improve and challenge my own ways of tackling problems, so I appreciate any and all constructive feedback (positive and negative).
 
 You probably have noticed some scaffolding classes and some extension functions that have not been used. I purposefully left this in order to demonstrate the scalability of the project as well as considerations made; i.e should the useCase return a Single, Observable, or a Completable? 
 
-### Future Work:### 
+### Future Work: ### 
 
 * The app could definitely do with a glow up; this would include using more Material Design principles, styles and a dark mode version. 
 * Each WordDAO would have to include a reference to its source when the application gets scaled to parse more sources of text. 
