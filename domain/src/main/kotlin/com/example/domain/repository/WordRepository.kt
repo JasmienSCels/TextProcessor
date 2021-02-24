@@ -7,5 +7,5 @@ interface WordRepository<T> {
 
     fun saveWord(model: T) : Completable
 
-    fun getWords(): Observable<T?>
+    fun loadWords(): Observable<T?>
 }

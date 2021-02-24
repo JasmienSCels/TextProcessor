@@ -9,7 +9,6 @@ import com.example.domain.repository.FileRepository
 import com.example.domain.repository.WordRepository
 import com.example.domain.usecase.base.ObservableUseCase
 import io.reactivex.Observable
-import io.reactivex.ObservableOnSubscribe
 import io.reactivex.Single
 import io.reactivex.internal.operators.observable.ObservableSwitchIfEmpty
 import okhttp3.ResponseBody
@@ -25,52 +24,56 @@ class LoadBookUseCase @Inject constructor(
     private val context: Context,
     private val fileRepository: FileRepository<Single<ResponseBody>>,
     private val wordRepository: WordRepository<WordFrequencyDM>,
-    scheduler: SchedulerProvider
+    val scheduler: SchedulerProvider
 ) : ObservableUseCase<WordFrequencyDM?, String>(scheduler.io, scheduler.main) {
 
 
     override fun buildUseCaseObservable(title: String?): Observable<WordFrequencyDM?> {
-        return ObservableSwitchIfEmpty(wordRepository.getWords(), getRemote(title))
+        return wordRepository.loadWords()
+        //return ObservableSwitchIfEmpty(wordRepository.loadWords(), getRemote(title))
     }
 
     /*
 
      */
-    private fun getRemote(title: String?): Observable<WordFrequencyDM> {
-        Log.d(TAG, "getRemote")
-        if (title == null) throw IllegalArgumentException()
-        return Observable.create { emitter ->
-            try {
-                fileRepository.getFile(title)
-                    .map pairs@{ rb ->
-                        val file = toFile(title, rb)
-                        val text = file?.readText()?.toLowerCase(Locale.ROOT)
-                        val r = Regex("""\p{javaLowerCase}+""")
-                        val matches = text?.let { r.findAll(it) }
-                        return@pairs matches?.map {
-                            matches.map { it.value }
-                                .groupBy { it }
-                                .map { it.key to it.value.size }
-                                .map { (title, freq) ->
-                                    val word =
-                                        WordFrequencyDM(
-                                            word = title,
-                                            frequency = freq,
-                                            isPrime = freq.isPrime()
-                                        )
-                                    wordRepository.saveWord(word)
-                                    emitter.onNext(word)
-                                }
-                        }
-                    }
-            } catch (e: Exception) {
-                Log.d(TAG, "Error: " + e.localizedMessage)
-                emitter.onError(e)
-            }
-            emitter.onComplete()
-        }
-
-    }
+//    private fun getRemote(title: String?): Observable<WordFrequencyDM> {
+//        Log.d(TAG, "getRemote")
+//        if (title == null) throw IllegalArgumentException()
+//        return Observable.create { emitter ->
+//            try {
+//                return fileRepository.getFile(title)
+//                    .map pairs@{ rb ->
+//                        val file = toFile(title, rb)
+//                        val text = file?.readText()?.toLowerCase(Locale.ROOT)
+//                        val r = Regex("""\p{javaLowerCase}+""")
+//                        val matches = text?.let { r.findAll(it) }
+//                        return@pairs matches?.map dm@{
+//                            matches.map { it.value }
+//                                .groupBy { it }
+//                                .map { it.key to it.value.size }
+//                                .map { (title, freq) ->
+//                                    WordFrequencyDM(
+//                                        word = title,
+//                                        frequency = freq,
+//                                        isPrime = freq.isPrime()
+//                                    ).apply {
+//                                        wordRepository.saveWord(this)
+//                                        emitter.onNext(this)
+//                                    }
+//                                }.map {
+//                                     return@dm it
+//                                }
+//                        }
+//                    }
+//                emitter.onComplete()
+//            } catch (e: Exception) {
+//                Log.d(TAG, "Error: " + e.localizedMessage)
+//                emitter.onError(e)
+//            }
+//            emitter.onComplete()
+//        }
+//
+//    }
 
     private fun toFile(title: String, body: ResponseBody?): File? {
         if (body == null) return null

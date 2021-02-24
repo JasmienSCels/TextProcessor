@@ -5,14 +5,13 @@ import com.example.domain.repository.WordRepository
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
-import java.lang.Exception
 import javax.inject.Inject
 
 class WordRepositoryImpl<T> @Inject constructor(
     private val localDS: LocalDS<T>
 ) : WordRepository<T> {
 
-    override fun getWords(): Observable<T?> {
+    override fun loadWords(): Observable<T?> {
         Log.d(TAG, "get from local Room DB")
         return Observable.create { emitter ->
             try {

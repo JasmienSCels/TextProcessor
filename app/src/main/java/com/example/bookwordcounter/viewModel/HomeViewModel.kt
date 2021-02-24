@@ -9,12 +9,15 @@ import com.example.bookwordcounter.models.toUMI
 import com.example.domain.common.errorHandling.ErrorType
 import com.example.domain.common.errorHandling.isConnectionError
 import com.example.domain.model.WordFrequencyDM
+import com.example.domain.usecase.FetchBookUseCase
 import com.example.domain.usecase.LoadBookUseCase
 import io.reactivex.observers.DisposableObserver
+import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
-    private val loadBookUseCase: LoadBookUseCase
+    private val loadBookUseCase: LoadBookUseCase,
+    private val fetchBookUseCase: FetchBookUseCase
 ) : BaseViewModel(loadBookUseCase) {
 
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
@@ -37,6 +40,7 @@ class HomeViewModel @Inject constructor(
             observer = BookObserver(),
             params = title
         )
+        fetchBookUseCase.execute(FetchObserver(), title)
     }
 
     private inner class BookObserver : DisposableObserver<WordFrequencyDM?>() {
@@ -57,7 +61,26 @@ class HomeViewModel @Inject constructor(
                 e.isConnectionError() -> _errorState.postValue(ErrorType.NETWORK_CONNECTION_ERROR)
                 else -> _errorState.postValue(ErrorType.UNKNOWN_ERROR)
             }
+        }
+    }
 
+    private inner class FetchObserver : DisposableSingleObserver<Set<WordFrequencyDM>>() {
+
+
+        override fun onError(e: Throwable) {
+            Log.d(TAG, "BookObserver: onError " + e.localizedMessage)
+            _isLoading.postValue(false)
+            when {
+                e.isConnectionError() -> _errorState.postValue(ErrorType.NETWORK_CONNECTION_ERROR)
+                else -> _errorState.postValue(ErrorType.UNKNOWN_ERROR)
+            }
+        }
+
+        override fun onSuccess(t: Set<WordFrequencyDM>) {
+            t.forEach{
+                _words.value = it.toUMI()
+                _isLoading.postValue(false)
+            }
         }
     }
 

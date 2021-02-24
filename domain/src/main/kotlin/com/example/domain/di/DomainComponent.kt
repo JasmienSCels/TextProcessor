@@ -1,5 +1,6 @@
 package com.example.domain.di
 
+import com.example.domain.usecase.FetchBookUseCase
 import com.example.domain.usecase.LoadBookUseCase
 import dagger.Component
 
@@ -7,4 +8,6 @@ import dagger.Component
 interface DomainComponent {
 
     fun getLoadBookUseCase(): LoadBookUseCase
+
+    fun getFetchBookUseCase(): FetchBookUseCase
 }
