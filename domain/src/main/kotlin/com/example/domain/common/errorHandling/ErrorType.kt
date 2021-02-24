@@ -1,8 +1,6 @@
-package com.example.common.core.errorHandling
+package com.example.domain.common.errorHandling
 
 enum class ErrorType {
-    CLIENT_ERROR,
-    SERVER_ERROR,
     NETWORK_CONNECTION_ERROR,
     UNKNOWN_ERROR
 }

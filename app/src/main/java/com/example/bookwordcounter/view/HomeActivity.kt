@@ -1,7 +1,6 @@
 package com.example.bookwordcounter.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -15,7 +14,7 @@ import com.example.bookwordcounter.di.ViewInjector
 import com.example.bookwordcounter.models.WordUIM
 import com.example.bookwordcounter.view.list.WordAdapter
 import com.example.bookwordcounter.viewModel.HomeViewModel
-import com.example.common.core.errorHandling.ErrorType
+import com.example.domain.common.errorHandling.ErrorType
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -33,7 +32,6 @@ class HomeActivity : AppCompatActivity() {
         AppInjector.initialise(this.applicationContext)
         ViewInjector.initialise()
 
-
         dataBinding = DataBindingUtil.setContentView(
             this,
             R.layout.home_activity
@@ -46,10 +44,9 @@ class HomeActivity : AppCompatActivity() {
             ViewModelProvider(this, ViewInjector.component.getHomeViewModelFactory()).get(
                 HomeViewModel::class.java
             )
-
         initObservers()
         setUpRecyclerView()
-        homeViewModel.loadPosts()
+        homeViewModel.loadPosts(TITLE)
     }
 
     private fun initObservers() =
@@ -84,17 +81,12 @@ class HomeActivity : AppCompatActivity() {
         when (error) {
             ErrorType.NETWORK_CONNECTION_ERROR -> Snackbar.make(
                 dataBinding.root,
-                "Network Error Connection",
-                Snackbar.LENGTH_LONG
-            ).show()
-            ErrorType.UNKNOWN_ERROR -> Snackbar.make(
-                dataBinding.root,
-                "An unknown error has occurred",
+                R.string.network_error,
                 Snackbar.LENGTH_LONG
             ).show()
             else -> Snackbar.make(
                 dataBinding.root,
-                "Opps! An error has occurred on our end.",
+                R.string.unknown_error,
                 Snackbar.LENGTH_LONG
             ).show()
         }
@@ -104,6 +96,11 @@ class HomeActivity : AppCompatActivity() {
         with(dataBinding) {
             adapter = WordAdapter().also { recyclerView.adapter = it }
         }
+    }
+
+    private companion object {
+        val TAG = HomeActivity::class.java.simpleName
+        const val TITLE = "Railway-Children-by-E-Nesbit.txt"
     }
 
 }

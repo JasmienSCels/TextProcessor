@@ -7,7 +7,6 @@ import com.example.bookwordcounter.di.DaggerApplicationComponent
 
 class BookWordCounterApp: Application() {
 
-
     override fun onCreate() {
         super.onCreate()
         instance = this@BookWordCounterApp

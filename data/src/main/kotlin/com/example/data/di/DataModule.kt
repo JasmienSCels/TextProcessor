@@ -15,13 +15,12 @@ import dagger.Module
 import dagger.Provides
 import io.reactivex.Single
 import okhttp3.ResponseBody
-import java.io.File
 
 @Module
 internal class DataModule(private val context: Context) {
 
     @Provides
-    fun provideUserApiService(): BookApiService = BookApiService(context)
+    fun provideUserApiService(): BookApiService = BookApiService()
 
     @Provides
     fun provideFileRemoteDS(service: BookApiService): FileRepositoryImpl.RemoteDS<ResponseBody> =
@@ -33,11 +32,11 @@ internal class DataModule(private val context: Context) {
 
     @Provides
     fun provideFileRepository(remoteDS: FileRemoteDS): FileRepository<Single<ResponseBody>> =
-        FileRepositoryImpl<ResponseBody>(remoteDS)
+        FileRepositoryImpl(remoteDS)
 
     @Provides
     fun provideWordRepository(localDS: WordLocalDS): WordRepository<WordFrequencyDM> =
-        WordRepositoryImpl<WordFrequencyDM>(localDS)
+        WordRepositoryImpl(localDS)
 
     @Provides
     fun provideWordDAO(): WordDAO = AppDatabase.getInstance(context.applicationContext).wordDAO()

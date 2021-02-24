@@ -4,6 +4,9 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.benchmark"
 
+apply from: '../scripts/android_test_dependencies.gradle'
+
+
 android {
   compileSdkVersion 29
   buildToolsVersion "30.0.2"

@@ -30,7 +30,7 @@ class LoadBookUseCase @Inject constructor(
 
 
     override fun buildUseCaseObservable(title: String?): Observable<WordFrequencyDM?> {
-        return ObservableSwitchIfEmpty(wordRepository.getWords(), wordRepository.getWords())
+        return ObservableSwitchIfEmpty(wordRepository.getWords(), getRemote(title))
     }
 
     /*
@@ -38,15 +38,16 @@ class LoadBookUseCase @Inject constructor(
      */
     private fun getRemote(title: String?): Observable<WordFrequencyDM> {
         Log.d(TAG, "getRemote")
+        if (title == null) throw IllegalArgumentException()
         return Observable.create { emitter ->
             try {
-                fileRepository.getFile(title!!)
+                fileRepository.getFile(title)
                     .map pairs@{ rb ->
                         val file = toFile(title, rb)
-                        val text = file!!.readText().toLowerCase(Locale.ROOT)
+                        val text = file?.readText()?.toLowerCase(Locale.ROOT)
                         val r = Regex("""\p{javaLowerCase}+""")
-                        val matches = r.findAll(text)
-                        return@pairs matches.map {
+                        val matches = text?.let { r.findAll(it) }
+                        return@pairs matches?.map {
                             matches.map { it.value }
                                 .groupBy { it }
                                 .map { it.key to it.value.size }
@@ -76,23 +77,19 @@ class LoadBookUseCase @Inject constructor(
         var byteStream: InputStream? = null;
         var buffer: FileOutputStream? = null;
 
-        try {
+        return try {
             byteStream = body.byteStream();
             buffer = FileOutputStream(context.filesDir.toString() + "/" + title);
             var size: Int
             while (byteStream.read().also { size = it } != -1) {
                 buffer.write(size)
             }
-            return File(context.filesDir.toString() + "/" + title)
+            File(context.filesDir.toString() + "/" + title)
         } catch (e: IOException) {
-            return null;
+            null;
         } finally {
-            if (byteStream != null) {
-                byteStream.close();
-            }
-            if (buffer != null) {
-                buffer.close();
-            }
+            byteStream?.close()
+            buffer?.close()
         }
     }
 

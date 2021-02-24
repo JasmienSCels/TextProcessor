@@ -9,12 +9,13 @@ import com.example.bookwordcounter.models.WordUIM
 internal class WordAdapter : ListAdapter<WordUIM, WordViewHolder>(WordDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordViewHolder =
-       WordViewHolder(
-           WordViewHolderBinding.inflate(
-           LayoutInflater.from(parent.context),
-           parent,
-           false
-       ))
+        WordViewHolder(
+            WordViewHolderBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
 
     override fun onBindViewHolder(holder: WordViewHolder, position: Int) {
         holder.onBind(getItem(position))

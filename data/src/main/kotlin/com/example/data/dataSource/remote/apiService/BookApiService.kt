@@ -15,7 +15,7 @@ import retrofit2.http.Query
 import retrofit2.http.Streaming
 import javax.inject.Inject
 
-class BookApiService @Inject constructor(context: Context) {
+class BookApiService @Inject constructor() {
 
     fun loadBook(title: String) =
         service.getBook(title)
