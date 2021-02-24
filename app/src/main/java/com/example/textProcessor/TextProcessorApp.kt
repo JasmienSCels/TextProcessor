@@ -3,7 +3,7 @@ package com.example.textProcessor
 import android.app.Application
 import android.content.Context
 import com.example.textProcessor.di.AppInjector
-import com.example.bookwordcounter.di.DaggerApplicationComponent
+import com.example.textProcessor.di.DaggerApplicationComponent
 
 class TextProcessorApp: Application() {
 

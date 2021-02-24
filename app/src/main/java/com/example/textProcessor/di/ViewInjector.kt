@@ -1,6 +1,5 @@
 package com.example.textProcessor.di
 
-import com.example.bookwordcounter.di.DaggerViewComponent
 import com.example.domain.di.DomainInjector
 
 object ViewInjector {
