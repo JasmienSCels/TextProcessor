@@ -1,4 +1,4 @@
-#The Challenge:
+The Challenge:
 
 Given a book in a text file (http://www.loyalbooks.com/download/text/Railway-Children-by-E-
 Nesbit.txt)
