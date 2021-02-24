@@ -7,7 +7,9 @@ import com.example.bookwordcounter.common.base.viewModel.BaseViewModel
 import com.example.bookwordcounter.models.WordUIM
 import com.example.bookwordcounter.models.toUMI
 import com.example.domain.common.errorHandling.ErrorType
+import com.example.domain.common.errorHandling.NotCachedException
 import com.example.domain.common.errorHandling.isConnectionError
+import com.example.domain.common.errorHandling.isNotCachedError
 import com.example.domain.model.WordFrequencyDM
 import com.example.domain.usecase.FetchBookUseCase
 import com.example.domain.usecase.LoadBookUseCase
@@ -24,6 +26,8 @@ class HomeViewModel @Inject constructor(
     private val _words: MutableLiveData<WordUIM> = MutableLiveData()
     private val _errorState: MutableLiveData<ErrorType> = MutableLiveData()
 
+    private lateinit var title: String
+
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
@@ -35,12 +39,12 @@ class HomeViewModel @Inject constructor(
 
 
     fun loadPosts(title: String) {
+        this.title = title
         _isLoading.postValue(true)
         loadBookUseCase.execute(
             observer = BookObserver(),
             params = title
         )
-        fetchBookUseCase.execute(FetchObserver(), title)
     }
 
     private inner class BookObserver : DisposableObserver<WordFrequencyDM?>() {
@@ -59,13 +63,17 @@ class HomeViewModel @Inject constructor(
             _isLoading.postValue(false)
             when {
                 e.isConnectionError() -> _errorState.postValue(ErrorType.NETWORK_CONNECTION_ERROR)
+                e.isNotCachedError() -> {
+                    _errorState.postValue(ErrorType.NOT_CACHED_ERROR)
+                    fetchBookUseCase.execute(FetchObserver(), title)
+                }
                 else -> _errorState.postValue(ErrorType.UNKNOWN_ERROR)
+
             }
         }
     }
 
     private inner class FetchObserver : DisposableSingleObserver<Set<WordFrequencyDM>>() {
-
 
         override fun onError(e: Throwable) {
             Log.d(TAG, "BookObserver: onError " + e.localizedMessage)
@@ -77,7 +85,7 @@ class HomeViewModel @Inject constructor(
         }
 
         override fun onSuccess(t: Set<WordFrequencyDM>) {
-            t.forEach{
+            t.forEach {
                 _words.value = it.toUMI()
                 _isLoading.postValue(false)
             }

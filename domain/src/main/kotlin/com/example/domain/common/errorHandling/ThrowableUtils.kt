@@ -18,3 +18,7 @@ fun Throwable.getHttpException(): Int? = when {
 
 private fun Throwable.isNetworkException() =
     this is ConnectException || this is UnknownHostException || this is SocketTimeoutException
+
+
+fun Throwable.isNotCachedError() =
+    this is NotCachedException

@@ -84,6 +84,11 @@ class HomeActivity : AppCompatActivity() {
                 R.string.network_error,
                 Snackbar.LENGTH_LONG
             ).show()
+            ErrorType.NOT_CACHED_ERROR -> Snackbar.make(
+                dataBinding.root,
+                "Hold tight! We are hard at work!",
+                Snackbar.LENGTH_LONG
+            ).show()
             else -> Snackbar.make(
                 dataBinding.root,
                 R.string.unknown_error,

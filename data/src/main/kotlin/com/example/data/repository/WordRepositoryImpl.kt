@@ -1,6 +1,7 @@
 package com.example.data.repository
 
 import android.util.Log
+import com.example.domain.common.errorHandling.NotCachedException
 import com.example.domain.repository.WordRepository
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -12,11 +13,13 @@ class WordRepositoryImpl<T> @Inject constructor(
 ) : WordRepository<T> {
 
     override fun loadWords(): Observable<T?> {
-        Log.d(TAG, "get from local Room DB")
+        Log.d(TAG, "loads words from db")
         return Observable.create { emitter ->
             try {
-                localDS.fetchAll().map {
+                localDS.fetchAll().onEach {
                     emitter.onNext(it)
+                }.ifEmpty {
+                    emitter.onError(NotCachedException("Data Empty"))
                 }
                 emitter.onComplete()
             } catch (e: Exception) {

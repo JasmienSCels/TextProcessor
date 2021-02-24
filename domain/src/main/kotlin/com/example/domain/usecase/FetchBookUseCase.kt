@@ -1,15 +1,12 @@
 package com.example.domain.usecase
 
 import android.content.Context
-import android.util.Log
 import com.example.domain.common.extensions.isPrime
 import com.example.domain.common.reactiveX.scheduler.SchedulerProvider
 import com.example.domain.model.WordFrequencyDM
 import com.example.domain.repository.FileRepository
 import com.example.domain.repository.WordRepository
-import com.example.domain.usecase.base.ObservableUseCase
 import com.example.domain.usecase.base.SingleUseCase
-import io.reactivex.Observable
 import io.reactivex.Single
 import okhttp3.ResponseBody
 import java.io.File
@@ -18,7 +15,10 @@ import java.io.IOException
 import java.io.InputStream
 import java.util.*
 import javax.inject.Inject
-
+/*
+    This could be improved as a ObservableUseCase, where the DMs get emitted as they get saved in the db.
+    This would allow for better UX.
+ */
 class FetchBookUseCase @Inject constructor(
     private val context: Context,
     private val fileRepository: FileRepository<Single<ResponseBody>>,
@@ -71,6 +71,5 @@ class FetchBookUseCase @Inject constructor(
             buffer?.close()
         }
     }
-
 
 }
