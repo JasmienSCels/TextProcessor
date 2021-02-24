@@ -64,10 +64,10 @@ class HomeViewModel @Inject constructor(
                 e.isConnectionError() -> _errorState.postValue(ErrorType.NETWORK_CONNECTION_ERROR)
                 e.isNotCachedError() -> {
                     _errorState.postValue(ErrorType.NOT_CACHED_ERROR)
+                    _isLoading.postValue(true)
                     fetchBookUseCase.execute(FetchObserver(), title)
                 }
                 else -> _errorState.postValue(ErrorType.UNKNOWN_ERROR)
-
             }
         }
     }

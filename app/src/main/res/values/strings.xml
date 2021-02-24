@@ -4,7 +4,7 @@
   <!--Errors -->
   <string name="unknown_error">An unknown error has occurred</string>
   <string name="network_error">Network Error Connection</string>
-  <string name="data_not_cached_error">Hold tight! We are hard at work!</string>
+  <string name="data_not_cached_error">Hold tight! Hard work is in Progress!</string>
 
 
 </resources>

@@ -6,15 +6,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.textProcessor.TextProcessorApp
 import com.example.bookwordcounter.R
 import com.example.bookwordcounter.databinding.HomeActivityBinding
+import com.example.domain.common.errorHandling.ErrorType
+import com.example.textProcessor.TextProcessorApp
 import com.example.textProcessor.di.AppInjector
 import com.example.textProcessor.di.ViewInjector
 import com.example.textProcessor.models.WordUIM
 import com.example.textProcessor.view.list.WordAdapter
 import com.example.textProcessor.viewModel.HomeViewModel
-import com.example.domain.common.errorHandling.ErrorType
 import com.google.android.material.snackbar.Snackbar
 
 
