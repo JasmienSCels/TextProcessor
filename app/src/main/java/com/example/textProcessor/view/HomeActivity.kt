@@ -46,7 +46,8 @@ class HomeActivity : AppCompatActivity() {
             )
         initObservers()
         setUpRecyclerView()
-        homeViewModel.loadPosts(TITLE)
+        homeViewModel.loadText(TITLE)
+
     }
 
     private fun initObservers() =

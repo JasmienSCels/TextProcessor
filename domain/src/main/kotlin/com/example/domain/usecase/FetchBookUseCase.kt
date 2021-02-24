@@ -15,6 +15,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.util.*
 import javax.inject.Inject
+
 /*
     This could be improved as a ObservableUseCase, where the DMs get emitted as they get saved in the db.
     This would allow for better UX.
@@ -27,28 +28,27 @@ class FetchBookUseCase @Inject constructor(
 ) : SingleUseCase<Set<WordFrequencyDM>, String>(scheduler.io, scheduler.main) {
 
     override fun buildUseCaseSingle(title: String?): Single<Set<WordFrequencyDM>> {
-
-        return fileRepository.getFile(title!!)
+        if(title == null) return Single.error(Throwable("Title must not be null"))
+        return fileRepository.getFile(title)
             .map { rb ->
                 val file = toFile(title, rb)
-                val text = file!!.readText().toLowerCase(Locale.ROOT)
+                val text = file?.readText()?.toLowerCase(Locale.ROOT)
                 val r = Regex("""\p{javaLowerCase}+""")
-                val matches = r.findAll(text!!)
-                val wordGroups = matches.map { it.value }
-                    .groupBy { it }
-                    .map { Pair(it.key, it.value.size) }
+                val matches = text?.let { r.findAll(it) }
+                val wordGroups = matches?.map { it.value }
+                    ?.groupBy { it }
+                    ?.map { it.key to it.value.size }
                 val wordList = mutableListOf<WordFrequencyDM>()
-                for ((word, freq) in wordGroups) {
-                    val wordFrequencyDM =
-                        WordFrequencyDM(word = word, frequency = freq, isPrime = freq.isPrime())
-                    wordRepository.saveWord(wordFrequencyDM)
-                    wordList.add(wordFrequencyDM)
+                if (wordGroups != null) {
+                    for ((word, freq) in wordGroups) {
+                        val wordFrequencyDM =
+                            WordFrequencyDM(word = word, frequency = freq, isPrime = freq.isPrime())
+                        wordRepository.saveWord(wordFrequencyDM)
+                        wordList.add(wordFrequencyDM)
+                    }
                 }
                 wordList.toSet()
             }
-//            .onErrorReturn {
-//             //   getErrorResult(it)
-//            }
     }
 
     private fun toFile(title: String, body: ResponseBody?): File? {

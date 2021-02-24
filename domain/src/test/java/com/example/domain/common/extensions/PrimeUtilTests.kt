@@ -1,9 +1,9 @@
 package com.example.domain.common.extensions
 
+import junit.framework.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
-import junit.framework.Assert.assertEquals
 
 @RunWith(MockitoJUnitRunner::class)
 class PrimeUtilTests {

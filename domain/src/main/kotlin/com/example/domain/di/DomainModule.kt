@@ -9,8 +9,6 @@ import dagger.Module
 import dagger.Provides
 import io.reactivex.Single
 import okhttp3.ResponseBody
-import java.io.File
-import java.util.concurrent.Callable
 import javax.inject.Provider
 
 @Module

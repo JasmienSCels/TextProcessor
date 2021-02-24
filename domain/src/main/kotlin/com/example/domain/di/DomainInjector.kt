@@ -7,8 +7,6 @@ import com.example.domain.repository.FileRepository
 import com.example.domain.repository.WordRepository
 import io.reactivex.Single
 import okhttp3.ResponseBody
-import java.io.File
-import java.util.concurrent.Callable
 import javax.inject.Provider
 
 object DomainInjector {

@@ -6,12 +6,10 @@ import androidx.test.core.app.ApplicationProvider
 import com.example.data.dataSource.local.database.AppDatabase
 import com.example.data.dataSource.local.database.dao.WordDAO
 import com.example.data.model.WordLM
-import io.mockk.verify
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert
 import org.junit.After
 import org.junit.Assert
-import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

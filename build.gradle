@@ -6,7 +6,7 @@ buildscript {
 
   ext.versions = [
           //Android Dependency versions
-          minSdk                    : 23,
+          minSdk                    : 26,
           targetSdk                 : 29,
           compileSdk                : 29,
           buildTools                : '29.0.3',

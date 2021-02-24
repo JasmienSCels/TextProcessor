@@ -1,6 +1,5 @@
 package com.example.data.common
 
-import android.content.Context
 import com.example.data.BuildConfig
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import io.reactivex.schedulers.Schedulers

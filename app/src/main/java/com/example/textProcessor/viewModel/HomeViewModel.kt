@@ -3,15 +3,15 @@ package com.example.textProcessor.viewModel
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.textProcessor.common.base.viewModel.BaseViewModel
-import com.example.textProcessor.models.WordUIM
-import com.example.textProcessor.models.toUMI
 import com.example.domain.common.errorHandling.ErrorType
 import com.example.domain.common.errorHandling.isConnectionError
 import com.example.domain.common.errorHandling.isNotCachedError
 import com.example.domain.model.WordFrequencyDM
 import com.example.domain.usecase.FetchBookUseCase
 import com.example.domain.usecase.LoadBookUseCase
+import com.example.textProcessor.common.base.viewModel.BaseViewModel
+import com.example.textProcessor.models.WordUIM
+import com.example.textProcessor.models.toUMI
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
@@ -37,7 +37,7 @@ class HomeViewModel @Inject constructor(
         get() = _errorState
 
 
-    fun loadPosts(title: String) {
+    fun loadText(title: String) {
         this.title = title
         _isLoading.postValue(true)
         loadBookUseCase.execute(

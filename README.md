@@ -28,6 +28,8 @@ The next time that the user accesses the application, the results are loaded fro
 Thank you for taking the time to inspect this project. 
 I am always looking to improve and challenge my own ways of tackling problems, so I appreciate any and all constructive feedback (positive and negative).
 
+This app was built and tested on Android v.26-30. Unfortunately, the app does not run on v.26, 27, 28; I tested the app on each version too late and could not resolve the issue in the timebox.
+Unfortunately, I did not have enough time to complete the amount of testing as I intended.
 You probably have noticed some scaffolding classes and some extension functions that have not been used. I purposefully left this in order to demonstrate the scalability of the project as well as considerations made; i.e should the useCase return a Single, Observable, or a Completable? 
 
 ### Future Work: ### 
@@ -38,5 +40,6 @@ You probably have noticed some scaffolding classes and some extension functions 
 * The app’s security was not a high priority in the given time-frame, therefore more should be added to the Proguard-rules. 
 * The algorithms related to processing the text could be better researched to improve efficiencies and the UX. 
 * Rather than the processed text from the remote source being a Single, it should be an Observable so that the user sees results as they are being calculated. 
-* There’s a bunch of dependencies that I copied over from another project, so some will need to be deleted or upgraded. 
+* There’s a bunch of dependencies that I copied over from another project, so some will need to be deleted or upgraded.
+* Improved Error Handling
 * And as always there can always be more tests. 

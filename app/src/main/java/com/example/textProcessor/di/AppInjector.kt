@@ -1,9 +1,8 @@
 package com.example.textProcessor.di
 
 import android.content.Context
-import com.example.textProcessor.common.reactiveX.DefaultSchedulerProvider
 import com.example.data.di.DataInjector
-import com.example.domain.di.DomainInjector
+import com.example.textProcessor.common.reactiveX.DefaultSchedulerProvider
 
 object AppInjector {
 
